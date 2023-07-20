@@ -91,11 +91,9 @@ def increase_user():
         number_of_people += 1
     pass
 
-
 name = ['김시습', '허균', '남영로', '임제', '박지원']
 age = [20, 16, 52, 36, 60]
 address = ['서울', '강릉', '조선', '나주', '한성부']
-
 
 def create_user(n, a, ad):
     increase_user()
@@ -103,9 +101,9 @@ def create_user(n, a, ad):
     print('{}님 환영합니다!'.format(user_info['name']))
     return user_info
 
+many_user = list(map(create_user, name, age, address))
 
-many_user = None
-info = list(map(create_user, name, age))
+info = zip(map(lambda x, y : x[i] : y[i], i.items))
 
 # book.py
 number_of_book = 100
