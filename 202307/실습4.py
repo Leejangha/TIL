@@ -58,10 +58,12 @@ from pprint import pprint as print
 
 dummy_data = []
 
-for i in range(1,11):
-    API_URL = 'https://jsonplaceholder.typicode.com/users/' + str(i)
-    response = requests.get(API_URL)
-    parsed_data = response.json()
-    dummy_data.append(parsed_data['name'])
+API_URL = 'https://jsonplaceholder.typicode.com/users/'
+response = requests.get(API_URL)
+parsed_data = response.json()
 
-print(dummy_data)
+for i in range(10):
+    user_data = parsed_data[i]
+    user_info = {"name" : user_data['name'], "lat" : user_data['address']['geo']['lat'], "lng" : user_data['address']['geo']['lng'], "companyname" : user_data['company']['name']}
+    if user_info['lat']
+    dummy_data.append(user_info)

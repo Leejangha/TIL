@@ -1,17 +1,19 @@
-import requests
-from pprint import pprint as print
+import json # 내장 모듈
 
-# 무작위 유저 정보 요청 경로
-API_URL = 'https://jsonplaceholder.typicode.com/users/1'
-# API 요청
-response = requests.get(API_URL)
-# JSON -> dict 데이터 변환
-parsed_data = response.json()
+# json 데이터
+json_data = '''
+{
+    "name" : "김싸피",
+    "age" : 28,
+    "hobbies" : [
+        "공부하기",
+        "복습하기"
+    ]
+}
+'''
 
-# 응답 데이터 출력
-print(response)
+data = json.loads(json_data)
 
-# 변환 데이터 출력
-print(parsed_data)
-# 변환 데이터의 타입
-print(type(parsed_data))
+# JSON 데이터에서 원하는 데이터만 가져오기
+name = data.get('name')
+print(name)
