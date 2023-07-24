@@ -29,20 +29,30 @@ from pprint import pprint as print
 
 dummy_data = []
 
+for i in range(1,11):
+    API_URL = 'https://jsonplaceholder.typicode.com/users/' + str(i)
+    response = requests.get(API_URL)
+    parsed_data = response.json()
+    dummy_data.append(parsed_data['name'])
+
+print(dummy_data)
+
+
+import requests
+from pprint import pprint as print
+
+dummy_data = []
+
 API_URL = 'https://jsonplaceholder.typicode.com/users/'
 response = requests.get(API_URL)
 parsed_data = response.json()
-
-parsed_data_slice = []
-
-for i in range(10):
-    parsed_data_slice.append(parsed_data[i])
-    dummy_data.append(parsed_data_slice[i]['name'])
+dummy_data.append(parsed_data['name'])
 
 print(dummy_data)
 
 
 # 실습 4-3
+
 import requests
 from pprint import pprint as print
 
@@ -55,14 +65,5 @@ parsed_data = response.json()
 for i in range(10):
     user_data = parsed_data[i]
     user_info = {"name" : user_data['name'], "lat" : user_data['address']['geo']['lat'], "lng" : user_data['address']['geo']['lng'], "companyname" : user_data['company']['name']}
-    if float(user_info['lat']) >= 80 or float(user_info['lat']) <= -80:
-        continue
-    if float(user_info['lng']) >= 80 or float(user_info['lng']) <= -80:
-        continue
+    if user_info['lat']
     dummy_data.append(user_info)
-
-print(dummy_data)
-
-
-# 실습 4-4
-

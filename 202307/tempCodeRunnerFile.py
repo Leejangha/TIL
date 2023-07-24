@@ -1,19 +1,19 @@
-import json # 내장 모듈
+import requests
+from pprint import pprint as print
 
-# json 데이터
-json_data = '''
-{
-    "name" : "김싸피",
-    "age" : 28,
-    "hobbies" : [
-        "공부하기",
-        "복습하기"
-    ]
-}
-'''
+dummy_data = []
 
-data = json.loads(json_data)
+API_URL = 'https://jsonplaceholder.typicode.com/users/'
+response = requests.get(API_URL)
+parsed_data = response.json()
 
-# JSON 데이터에서 원하는 데이터만 가져오기
-name = data.get('name')
-print(name)
+for i in range(10):
+    user_data = parsed_data[i]
+    user_info = {"name" : user_data['name'], "lat" : user_data['address']['geo']['lat'], "lng" : user_data['address']['geo']['lng'], "companyname" : user_data['company']['name']}
+    if float(user_info['lat']) >= 80 or float(user_info['lat']) <= -80:
+        continue
+    if float(user_info['lng']) >= 80 or float(user_info['lng']) <= -80:
+        continue
+    dummy_data.append(user_info)
+
+print(dummy_data)
