@@ -1,3 +1,8 @@
-import my_math
+my_str = {'a', 'b', 'c', 'd', 'e', 'f', 'g'}
 
-print(my_math.add(1, 2))
+print(my_str.pop())
+print(my_str.pop())
+print(my_str.pop())
+print(my_str.pop())
+print(my_str.pop())
+print(my_str.pop())

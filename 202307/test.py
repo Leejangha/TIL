@@ -1,9 +1,11 @@
-import requests
+def is_validation():
+    False_count = 1
+    result = ['s','fg']
+    if False_count > 0:
+        a = False,result
+        print(a)
+    else:
+        a = True
+        print(a)
 
-url = 'https://jsonplaceholder.typicode.com/todos/1'
-
-print(requests.get(url).json())
-
-
-b = {1,2,3,3}
-print(b)
+is_validation()
