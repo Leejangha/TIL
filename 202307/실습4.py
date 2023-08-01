@@ -399,42 +399,141 @@ user_data = [
 blood_types = ['A-', 'A+', 'B-', 'B+', 'O-', 'O+', 'AB-', 'AB+']
 black_list = ['Jenkins-Garcia', 'Stephens Group', 'White, Andrade and Howard', 'Warren-Stewart']
 
-user_list = []
 
-def create_user():
+
+def create_user(user_data):
+    user_list = []
     False_count = 0
-    for user_info in (user_data):
-        if  is_validation(user_info) == False:
-            user_list[is_validation(user_info)[1]] = None
-            False_count += 1
-        elif is_validation(user_info) == 'blocked':
+    for user_info in user_data:
+        if is_validation(user_info) == 'blocked':
             False_count += 1
             continue
-        else:
-            user_list.append(user_info)
+
+        elif is_validation(user_info)[0] == False:
+            False_count += 1
+            for wrong_data in is_validation(user_info)[1]:
+                user_info[wrong_data] = None
+        user_list.append(user_info)
     print(f'잘못된 데이터로 구성된 유저의 수는 {False_count}입니다.')
-    print(user_list)
+    return user_list
     
 
-
 def is_validation(user_info):
-    False_count = 0
+    if user_info['company'] in black_list:
+        return 'blocked'
+
+    is_True = True
     result = []
     if user_info['blood_group'] not in blood_types:
-        False_count += 1
+        is_True = False
         result.append('blood_group')
-    if user_info['company'] in black_list:
-        False_count += 1
-        return 'blocked'
     if '@' not in user_info['mail']:
-        False_count += 1
+        is_True = False
         result.append('mail')
-    if len(user_info['website']) < 1:
-        False_count += 1
+    if len(user_info['name']) < 2 or len(user_info['name']) > 31:
+        is_True = False
+        result.append('name')
+    if len(user_info['website']) <= 0:
+        is_True = False
         result.append('website')
-    if False_count > 0:
-        return False,result
-    else:
-        return True
+    return is_True, result
 
-create_user()
+print(create_user(user_data))
+
+
+
+# def create_user(user_data):
+#     user_list = []
+#     count = 0
+#     for data in user_data:
+#         result = is_validation(data)
+#         if result == 'blocked':
+#             count += 1
+#             continue
+
+#         elif result[0] == False:
+#             count += 1
+#             for wrong_data in result[1]:
+#                 data[wrong_data] = None
+#         user_list.append(data)
+#     print(f'잘못된 데이터로 구성된 유저의 수는 {count} 입니다.')  
+#     return user_list
+
+# def is_validation(data):
+#     if data['company'] in black_list:
+#         return 'blocked'
+    
+#     check = True
+#     check_list = []
+#     if data['blood_group'] not in blood_types:
+#         check = False
+#         check_list.append('blood_group')
+#     if '@' not in data['mail']:
+#         check = False
+#         check_list.append('mail')
+#     if 2 > len(data['name']) or 31 < len(data['name']):
+#         check = False
+#         check_list.append('name')
+#     if len(data['website']) <= 0:
+#         check = False
+#         check_list.append('website')
+
+#     return check, check_list
+
+# print(create_user(user_data))
+
+
+
+
+# def validate_user_data(data):
+#     blocked_users = []
+#     invalid_users = []
+
+#     for user in data:
+#         if user['company'] in black_list:
+#             blocked_users.append(user)
+#         else:
+#             valid, errors = is_valid_user(user)
+#             if not valid:
+#                 invalid_users.append((user, errors))
+
+#     return blocked_users, invalid_users
+
+# def is_valid_user(user):
+#     errors = []
+
+#     if user['blood_group'] not in blood_types:
+#         errors.append('blood_group')
+#     if '@' not in user['mail']:
+#         errors.append('mail')
+#     if len(user['name']) < 2 or len(user['name']) > 30:
+#         errors.append('name')
+#     if not user['website']:
+#         errors.append('website')
+
+#     return not errors, errors
+
+# def create_user(user_data):
+#     blocked_users, invalid_users = validate_user_data(user_data)
+    
+#     print(f'차단된 사용자: {json.dumps(blocked_users, indent=4)}')
+#     print(f'잘못된 데이터로 구성된 사용자: {json.dumps(invalid_users, indent=4)}')
+
+#     valid_users = [
+#         {
+#             key: user[key] if key not in errors else None
+#             for key in user.keys()
+#         }
+#         for user, errors in invalid_users
+#     ]
+
+#     return valid_users
+
+# print(create_user(user_data))
+
+
+
+
+
+
+
