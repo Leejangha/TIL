@@ -1,24 +1,19 @@
-# 조합
-def combination(numbers):
-    combinations = []
-    for i in range(len(numbers)-2):
-        for j in range(i+1, len(numbers)-1):
-            for k in range(j+1, len(numbers)):
-                sum = 0
-                sum = numbers[i] + numbers[j] + numbers[k]
-                combinations.append(sum)
-    return combinations
-
+T = int(input())
 A = list(range(1, 13))
-print(A)
 
+for t in range(1, T+1):
+    N, K = map(int,input().split())
 
-def factorial(n):
-    if n == 1:
-        return 1
-    return n * factorial(n-1)
-
-N =6
-com = int(factorial(12)/factorial(N)/factorial(12-N))
-
-print(com)
+    subsets = []
+    result = 0
+    for i in range(1<<12):
+        arr = []
+        for j in range(12):
+            if i & (1<<j):
+                arr.append(A[j])
+        if len(arr) == N:
+            subsets.append(arr)
+    for subset in subsets:
+        if sum(subset) == K:
+            result += 1
+    print(f'#{t} {result}')
