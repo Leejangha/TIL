@@ -1,13 +1,9 @@
-def solution(k, d):
-    count = 0
-    i = 0
-    x_list = []
-    while i * k <= d:
-        x_list.append(i * k)
-        i += 1
-    print(x_list)
-    # for x in x_list:
-    #     y_limit = int((d**2-x**2)**0.5/k)
-    #     count += y_limit + 1
-    # return count
-solution(2,4)
+def factorial(n):
+    if n == 1:
+        return 1
+    return n * factorial(n-1)
+
+N =6
+com = int(factorial(12)/factorial(N)/factorial(12-N))
+
+print(com)
