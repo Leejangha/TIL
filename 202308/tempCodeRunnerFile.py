@@ -1,9 +1,6 @@
-def factorial(n):
-    if n == 1:
-        return 1
-    return n * factorial(n-1)
-
-N =6
-com = int(factorial(12)/factorial(N)/factorial(12-N))
-
-print(com)
+j = 0
+i = 99
+ladders = [list(map(int, input().split())) for _ in range(100)]
+ladders[99][0] = 1
+if j>0 and ladders[i][j-1]:
+    print('a')
