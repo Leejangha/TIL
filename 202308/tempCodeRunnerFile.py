@@ -1,6 +1,31 @@
-j = 0
-i = 99
-ladders = [list(map(int, input().split())) for _ in range(100)]
-ladders[99][0] = 1
-if j>0 and ladders[i][j-1]:
-    print('a')
+def solution(cards):
+    answer = 0
+
+    box1 = []
+    # box2 = []
+    # result = []        
+    
+    i = 0            
+    j = 0
+    r = 0
+    box1.append(cards[i])        
+    while cards[box1[j]-1] in box1:
+        box1.append(cards[box1[j]-1])
+        j += 1
+    print(box1)
+    dif = list(set(cards).difference(box1))
+    print(dif)
+    #     for k in dif:
+    #         box2.append(cards[k-1])
+    #         while cards[box2[r]-1] in box2:
+    #             box2.append(cards[box2[r]-1])
+    #             r += 1
+    #     result.append(j * r)
+        
+    # answer = max(result)
+    # print(answer)
+    return
+
+cards = [8,6,3,7,2,5,1,4]
+
+solution(cards)
