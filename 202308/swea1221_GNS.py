@@ -46,9 +46,27 @@ for t in range(1, T+1):
 
     arr = []
     for char in dict_num:
-        arr.append(string.count(char))
+        arr.append(string.count(char)) 
 
     print(f'{tc}')
     for i, j in dict_num.items():
         print((i+' ') * arr[j], end=" ")
+    print()
+
+# 풀이
+target = ["ZRO", "ONE", "TWO", "THR", "FOR", "FIV", "SIX", "SVN", "EGT", "NIN"]
+
+for _ in range(int(input())):
+    num, lst = map(str, input.split())
+    str_list = list(map(str, input.split()))
+                    
+    for i in range(10):
+        cnt = 0
+        for STR in str_list:
+            if str == target[i]:
+            cnt += 1
+
+        result += target[i] * cnt
+
+    print(num)
     print()
