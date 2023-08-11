@@ -14,13 +14,13 @@ def path(n, m, v):
         else:
             if stack:
                 n = stack.pop()
-            else:
+            else: 
                 break
     return 0
 
 
-for t in range(1, 11):
-    T, E = map(int, input().split())
+for _ in range(10):
+    t, E = map(int, input().split())
 
     graph = [[] * 2 for _ in range(100)]
     MAP = list(map(int, input().split()))
