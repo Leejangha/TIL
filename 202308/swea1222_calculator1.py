@@ -1,7 +1,6 @@
 for t in range(1,11):
     N = int(input())
     formula = input()
-    res = 0
     stack = []
     op = []
     for form in formula:
@@ -10,6 +9,11 @@ for t in range(1,11):
         else:
             op.append(form)
     while op:
+        op1 = stack[-1]
+        stack.pop()
+        op2 = stack[-1]
+        stack.pop()
+        stack.append(op1 + op2)
         op.pop()
-        res = 
-    print(f'#{t} {res}')
+
+    print(f'#{t} {stack[-1]}')
