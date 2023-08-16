@@ -11,5 +11,6 @@ for t in range(1,11):
             op.append(form)
     while op:
         op.pop()
-        res = 
+        res += stack[-1]
+        stack.pop()
     print(f'#{t} {res}')
