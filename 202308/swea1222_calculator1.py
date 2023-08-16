@@ -15,5 +15,5 @@ for t in range(1,11):
         stack.pop()
         stack.append(op1 + op2)
         op.pop()
-
+ 
     print(f'#{t} {stack[-1]}')
