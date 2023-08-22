@@ -43,3 +43,24 @@ for t in range(1, 11):
             MAP[N].append(L)
 
     print(f'#{t} {node(N)}')
+
+
+# 풀이
+def inorder(p):  # N 완전이진트리의 마지막 정점
+    if p <= N:
+        inorder(p*2)    # 왼쪽 자식으로 이동
+        print(tree[p], end='')  # 중위순회에서 할 일
+        inorder(p*2+1)  # 오른쪽 자식으로 이동
+
+
+T = 10
+for t in range(1, T+1):
+    N = int(input())
+    tree = [0] * (N+1)
+    for _ in range(N):
+        arr = list(input().split())
+        tree[int(arr[0])] = arr[1]
+    # 중위순회
+    print(f'#{t} ', end='')
+    inorder(1)   # root = 1
+    print()
