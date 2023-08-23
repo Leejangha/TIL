@@ -1,19 +1,20 @@
-def min_heap(p):
-    i = 1
-    while i < N and tree[i] < tree[i//2]:
-        # if tree[i] < tree[i//2]:
-        tree[i], tree[i//2] = tree[i//2], tree[i]
-        i += 1
-
+def min_heap(i):
+    while i > 1:
+        if tree[i] < tree[i//2]:
+            tree[i], tree[i//2] = tree[i//2], tree[i]
+            i //= 2
+        else:
+            break
 
 for t in range(int(input())):
     N = int(input())
     lst = list(map(int, input().split()))
     tree = [0] + lst
-    min_heap(N)
-    k = N // 2
+    for i in range(1,N+1):
+        min_heap(i)
     res = 0
-    while k:
+    k = N // 2
+    while k > 0:
         res += tree[k]
         k //= 2
 
