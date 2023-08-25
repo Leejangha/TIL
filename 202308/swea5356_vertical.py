@@ -29,3 +29,15 @@ for t in range(1, T + 1):
     ans = ''.join(char for char in ''.join(lst) if char != '_')
 
     print(f'#{t} {ans}')
+
+#
+for t in range(int(input())):
+    STR = [input().ljust(15, '_') for _ in range(5)]
+    string = list(zip(*STR))
+    res = ''
+    for s in string:
+        for char in s:
+            if char != '_':
+                res += char
+
+    print(f'#{t+1} {res}')
