@@ -27,3 +27,24 @@ for t in range(1, T+1):
 
     answer = result.count(K)
     print(f'#{t} {answer}')
+
+
+# 수정
+for t in range(int(input())):
+    N, K = map(int, input().split())
+    MAP = [list(map(int, input().split())) for _ in range(N)]
+    MAP.extend(list(zip(*MAP)))
+    res = 0
+    for M in MAP:
+        cnt = 0
+        for num in M:
+            if num == 1:
+                cnt += 1
+            else:
+                if cnt == K:
+                    res += 1
+                cnt = 0
+        if cnt == K:
+            res += 1
+
+    print(f'#{t+1} {res}')
