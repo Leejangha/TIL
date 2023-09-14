@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>계산결과</h1>
+    <div>{{ num1 }} + {{ num2 }} = {{ num1|add:num2 }}</div>
+    <div>{{ num1 }} * {{ num2 }} = {{ mul }}</div>
+    <div>{{ num1 }} - {{ num2 }} = {{ diff }}</div>
+    <div>
+        {% if div %}
+        {{ num1 }} / {{ num2 }} = {{ div }}
+        {% else %}
+        계산할 수 없습니다
+        {% endif %}
+    </div>
+</body>
+</html>
