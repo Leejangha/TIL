@@ -1,0 +1,11 @@
+{% extends "trends/base.html" %}
+
+{% block content %}
+    <h1>트렌드 분석 애플리케이션</h1>  
+    <a href="{% url "trends:keyword" %}">키워드 추가</a>
+    <a href="{% url "trends:crawling" %}">크롤링</a>
+    <a href="{% url "trends:crawling_histogram" %}">히스토그램</a>
+    <a href="{% url "trends:crawling_advaned" %}">지난 1년 크롤링</a>
+  <h2>전체 기간 검색 결과 히스토그램</h2>
+  <img src="{{ chart_image }}" alt="">
+{% endblock content %}
