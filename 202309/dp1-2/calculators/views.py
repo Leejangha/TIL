@@ -5,19 +5,19 @@ def calculation(request):
     return render(request, 'calculators/calculation.html')
 
 def result(request):
-    num1 = request.GET.get('num1')
-    num2 = request.GET.get('num2')
+    num1 = int(request.GET.get('num1'))
+    num2 = int(request.GET.get('num2'))
     mul = num1 * num2
     diff = num1 - num2
     if num2 != 0:
-        div = num1 / num2
+        divi = num1 / num2
     else:
-        False
+        divi = False
     context = {
         'num1' : num1,
         'num2' : num2,
         'mul' : mul,
         'diff' : diff,
-        'div' : div,
+        'divi' : divi,
     }
     return render(request,'calculators/result.html', context)
