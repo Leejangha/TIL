@@ -1,150 +1,48 @@
-CREATE TABLE examples (
-    ExamId INTEGER PRIMARY KEY AUTOINCREMENT,
-    LastName VARCHAR(50) NOT NULL,
-    FirstName VARCHAR(50) NOT NULL
-);
-
--- 테이블 생성
-
+-- Table 구조 확인
 PRAGMA table_info('examples');
 
--- 테이블 구조 (sqlite3용)
--- cid -> 컴럼아이디
+-- `cid`
+-- cid는 "Column ID"를 의미하는 컬럼
+-- 각 컬럼의 고유한 식별자를 나타내는 정수 값
+-- 일반적으로 cid 컬럼은 사용자가 직접 사용하지 않으며, 
+-- PRAGMA table_info() 명령과 같은 메타데이터 조회 작업에서 컬럼의 정보를 식별하는 데 사용
 
-ALTER TABLE
-    examples
-ADD COLUMN 
-    Country VARCHAR(50) NOT NULL DEFAULT 1;
+-- 1. Create a table
+CREATE TABLE examples (
+  ExamId INTEGER PRIMARY KEY AUTOINCREMENT,
+  LastName VARCHAR(50) NOT NULL,
+  FirstName VARCHAR(50) NOT NULL
+);
 
+-- 2. Modifying table fields
+-- 2.1 ADD COLUMN
+ALTER TABLE 
+  examples
+ADD COLUMN
+  Country VARCHAR(100) NOT NULL;
+ 
+-- sqlite는 단일 문을 사용하여 한번에 여러 열을 추가하는 것을 지원하지 않음
+ALTER TABLE examples
+ADD COLUMN Age INTEGER NOT NULL;
 
-ALTER TABLE
-    examples
-ADD COLUMN 
-    Age INTEGER NOT NULL DEFAULT "";
+ALTER TABLE examples
+ADD COLUMN Address VARCHAR(100) NOT NULL;
 
-ALTER TABLE
-    examples
-ADD COLUMN 
-    Address VARCHAR(100) NOT NULL DEFAULT "";
+-- 2.2 RENAME COLUMN
+ALTER TABLE examples
+RENAME COLUMN Address TO PostCode;
 
+-- 2.3 DROP COLUMN
+ALTER TABLE examples
+DROP COLUMN PostCode;
 
-ALTER TABLE
-    examples
-RENAME COLUMN
-    Address TO PostCode;
-
-
-ALTER TABLE
-    examples
-DROP COLUMN
-    PostCode;
-
--- 이름 변경
+-- 2.4 RENAME TO
 ALTER TABLE examples
 RENAME TO new_examples;
 
+-- 3. Delete a table
 DROP TABLE new_examples;
+DROP TABLE examples;
 
-
-CREATE TABLE articles (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title VARCHAR(100) NOT NULL,
-    content VARCHAR(200) NOT NULL,
-    createdAt DATE NOT NULL
-);
-
-PRAGMA table_info("articles");
-
-INSERT INTO
-    articles (title, content, createdAt)
-VALUES
-    ('title1', 'content1', '2023-10-10'),
-    ('title2', 'content2', '2023-10-10'),
-    ('title3', 'content3', '2023-10-10');
-
-INSERT INTO
-    articles (title, content, createdAt)
-VALUES
-    ('title4', 'content4', DATE());
-
-
-UPDATE
-    articles
-SET
-    title = '바뀌나??'
-WHERE
-    id = 1;
-
-UPDATE
-    articles
-SET
-    title = 'update title'
-WHERE
-    id = 3;
-
-UPDATE
-    articles
-SET
-    content = 'update content'
-WHERE
-    id = 3;
-
-
-SELECT
-    *
-FROM
-    articles
-ORDER BY
-    id DESC;
-
-
-DELETE FROM
-    articles
-WHERE
-    id < 3;
-
-
-DELETE FROM
-    albums
-WHERE
-    AlbumId = 5;
-
-
-DELETE FROM
-    articles
-WHERE id IN (
-    SELECT id
-    FROM articles 
-    ORDER BY createdAt
-    LIMIT 2
-);
-
-CREATE TABLE contacts (
-    PK INTEGER PRIMARY KEY AUTOINCREMENT,
-    email VARCHAR(50) NOT NULL UNIQUE,
-    name VARCHAR(50) NOT NULL,
-    age INTEGER NOT NULL
-);
-
-PRAGMA table_info("contacts");
-
-
-CREATE TABLE users (
-    PK INTEGER PRIMARY KEY AUTOINCREMENT,
-    email VARCHAR(50) NOT NULL UNIQUE,
-    name VARCHAR(50) NOT NULL,
-    age INTEGER NOT NULL,
-    phoneNumber NOT NULL,
-    gender INTEGER
-    address NOT NULL DEFAULT "no address"
-);
-
-
-ALTER TABLE
-    users
-RENAME COLUMN
-    phoneNumber TO number;
-
-DROP TABLE users;
-
-PRAGMA table_info("users");
+-- sqlite는 컬럼 수정 불가
+-- 대신 테이블의 이름을 바꾸고, 새 테이블을 만들고 데이터를 새 테이블에 복사하는 방식을 사용
