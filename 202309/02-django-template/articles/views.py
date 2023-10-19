@@ -19,7 +19,7 @@ def dinner(request):
         'picked': picked,
         'empty_list': empty_list,
     }
-    return render(request, 'articles/dinner.html', context)
+    return render(request, 'articles/dinner.html', context) 
 
 
 def search(request):
