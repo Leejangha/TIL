@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let
+    // 재할당 O, 재선언 X
+    // let number = 10
+    // number = 10
+    // console.log(number)
+
+    // let number = 20
+
+    // const
+    // const number = 10
+    // number = 20
+    // console.log(number)
+
+    // const number = 20
+
+    // 블록 스코프
+    let x = 1
+    if (x == 1) {
+      let x = 2
+      console.log(x)
+    }
+    console.log(x)
+
+    // 템플릿 리터럴
+    const age = 100
+    const message = `홍길동은  ${age}세 입니다.`
+    console.log(message)
+
+    // const : 재할당 X, 재선언 X
+    // let : 재할당 O, 재선언 X
+    // 원시 자료형 const 참조 자료형 let 사용
+    // const 90% 이상 사용, let 10% 이하 사용
+    let arr1 = [1,2,3]
+    const a = arr1
+    console.log(a)
+    arr1 = [4,5,6]
+    console.log(a)
+    const b = arr1
+    console.log(b)
+    const obj = [1,2,3,4,5]
+    console.log(obj)
+    obj[0] = 10
+    console.log(obj)
+  </script>
+</body>
+
+</html>
+
+<!-- 호이스팅 :
+런타임 이전에, "선언문"들이 끌어올려지는 행위 -->
