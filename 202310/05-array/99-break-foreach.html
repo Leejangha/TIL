@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // forEach를 break 하는 대안
+    const names = ['Alice', 'Bella', 'Cathy',]
+
+    // some
+    // 배열의 요소 중 적어도 하나라도 판별 함수를 통과하면 true를 반환
+    names.some(function (name) {
+      console.log(name) // Alice, Bella
+      if (name === 'Bella') {
+        return true
+      }
+      return false
+    })
+
+    // every
+    // 배열의 모든 요소가 판별 함수를 통과해야만 true를 반환
+    names.every(function (name) {
+      console.log(name) // Alice, Bella
+      if (name === 'Bella') {
+        return false
+      }
+      return true
+    })
+
+
+    const a = [1,2,3,4,5]
+    console.log(a.reduce((acc, cur) => (cur%2 === 0 ? acc.concat(cur*2) : acc),[]))
+
+    console.log(a.reduce((acc, cur) => {
+      cur%2 === 0 ? acc.push(cur*2) : acc
+      return acc
+    }, []))
+
+    console.log(a.reduce((acc, cur) => {
+      if (cur%2 === 0) { acc.push(cur*2) }
+      return acc
+    },[]))
+    
+    const b = ['피카츄', '라이츄', '파이리', '꼬북이', '피카츄', '파이리']
+
+    console.log(b.reduce((acc, cur) => {
+      cur in acc ? acc[cur] += 1 : acc[cur] = 1
+      return acc
+    },{}))
+
+    console.log(b.reduce((acc, cur) => { cur in acc ? acc[cur] += 1 : acc[cur] = 1; return acc },{}))
+    
+  </script>
+</body>
+
+</html>
