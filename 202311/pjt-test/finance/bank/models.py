@@ -12,8 +12,7 @@ class DepositProducts(models.Model):
     spcl_cnd = models.TextField()  # 우대조건
 
 class DepositOptions(models.Model):
-    product = models.ForeignKey(DepositProducts, on_delete=models.CASCADE, related_name='deposit_options')  # 외래 키(DepositProducts 클래스 참조)
-    fin_prdt_cd = models.TextField()  # 금융 상품 코드
+    fin_prdt_cd = models.ForeignKey(DepositProducts, on_delete=models.CASCADE, related_name='deposit_options')  # 외래 키(DepositProducts 클래스 참조) # 금융 상품 코드
     intr_rate_type_nm = models.CharField(max_length=100)  # 저축금리 유형명
     intr_rate = models.FloatField(null=True, default=-1)  # 저축금리
     intr_rate2 = models.FloatField(null=True)  # 최고우대금리
@@ -33,8 +32,7 @@ class SavingProducts(models.Model):
     mtrt_int = models.TextField() # 만기 후 이자율
 
 class SavingOptions(models.Model):
-    product = models.ForeignKey(SavingProducts, on_delete=models.CASCADE, related_name='saving_options')  # 외래 키(SavingProducts 클래스 참조)
-    fin_prdt_cd = models.TextField()  # 금융 상품 코드
+    fin_prdt_cd = models.ForeignKey(SavingProducts, on_delete=models.CASCADE, related_name='saving_options')  # 외래 키(SavingProducts 클래스 참조)  # 금융 상품 코드
     intr_rate_type_nm = models.CharField(max_length=100)  # 저축금리 유형명
     intr_rate = models.FloatField(null=True, default=-1)  # 저축금리
     intr_rate2 = models.FloatField(null=True)  # 최고우대금리

@@ -11,20 +11,8 @@ API_KEY = settings.API_KEY_BANK
 API_URL = 'finlifeapi/depositProductsSearch.json'
 API_URL_SAVING = 'finlifeapi/savingProductsSearch.json'
 
-def api_test(request):
-    URL = BASE_URL + API_URL
-    params = {
-        'auth': API_KEY,
-        'topFinGrpNo': '020000',
-        'pageNo': 1
-    }
-    response = requests.get(URL, params=params).json()
-
-    return JsonResponse({'response':response})
-
-
+# 적금
 def save_deposit_products(request):
-    print('API')
     URL = BASE_URL + API_URL
     params = {
         'auth' : API_KEY,
@@ -32,6 +20,8 @@ def save_deposit_products(request):
         'pageNo' : '1'
     }
     response = requests.get(URL, params=params).json()
+
+    # product
     for item in response['result']['baseList']:
         print(item['fin_prdt_cd'])
         form = DepositProductsSerializer(data=item)
@@ -41,38 +31,67 @@ def save_deposit_products(request):
                 print('이미있음')
                 continue
             form.save()
-    return JsonResponse({'response':response})
-
-
-def deposit_products(request):
-    if request.method == 'GET':
-        products = DepositProducts.objects.all()
-        serializer = DepositProductsSerializer(products, many=True)
-        return JsonResponse({'response':serializer.data})
     
-    elif request.method == 'POST':
-        serializer = DepositProductsSerializer(data=request.POST)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse({'response': serializer.data})
-        else:
-            return JsonResponse({ 'message': '이미 있는 데이터이거나, 데이터가 잘못 입력되었습니다.'})    
+    # option
+    for item in response['result']['optionList']:
+        # if item['intr_rate'] is None:
+        #     item['intr_rate'] = -1
+        form = DepositOptionsSerializer(data=item)
+        if form.is_valid(raise_exception=True):
+            print('저장')
+            x = DepositProducts.objects.filter(fin_prdt_cd=item['fin_prdt_cd']).first()
+            if DepositProducts.objects.filter(
+                    intr_rate = item['intr_rate'],
+                    intr_rate2 = item['intr_rate2'],
+                    save_trm = item['save_trm'],
+                    intr_rate_type = item['intr_rate_type'],
+                    fin_prdt_cd_id = x.pk,
+                ).exists():
+                print('이미있음')
+                continue
+            form.save(fin_prdt_cd=x)
+    
+    # product, option 묶어서 보내기
+    result_list = []
+    # product
+    baselist = response['result']['baseList']
+    # option
+    optionlist = response['result']['optionList']
+    for product in baselist:
+        test = {}
+        for option in optionlist:
+            # product와 cd가 겹치는 option 뽑기
+            if product['fin_prdt_cd'] == option['fin_prdt_cd']:
+                # 개월 당 최고 우대금리 dict로 묶어서 넣기
+                test[option['save_trm']+'개월'] =  option['intr_rate2']
+        # 특정 개월이 없는 상품은 0으로 채워주기
+        trm = ['6개월', '12개월', '24개월', '36개월']
+        for t in trm:
+            if t not in test.keys():
+                test[t] = 0
+        # 은행 이름 첨부
+        test['bank'] = product['kor_co_nm']
+        # 상품 이름 첨부
+        test['product'] = product['fin_prdt_nm']
+        # ID 추가
+        test['id'] = product['fin_prdt_cd']
+        result_list.append(test)
+    return JsonResponse({'response':result_list})
 
 
-def api_test_saving(request):
-    URL = BASE_URL + API_URL_SAVING
-    params = {
-        'auth': API_KEY,
-        'topFinGrpNo': '020000',
-        'pageNo': 1
-    }
-    response = requests.get(URL, params=params).json()
-
-    return JsonResponse({'response':response})
+def deposit_detail(request, product_id):
+    if request.method == 'GET':
+        try:
+            product = DepositProducts.objects.get(fin_prdt_cd=product_id)
+            serializer = DepositProductsSerializer(product)
+            return JsonResponse({'success': True, 'product': serializer.data})
+        # 일치하는 상품이 없을 경우 예외처리
+        except DepositProducts.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Product not found'})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
 
 
 def save_saving_products(request):
-    print('API')
     URL = BASE_URL + API_URL_SAVING
     params = {
         'auth' : API_KEY,
@@ -80,6 +99,8 @@ def save_saving_products(request):
         'pageNo' : '1'
     }
     response = requests.get(URL, params=params).json()
+
+    # product
     for item in response['result']['baseList']:
         print(item['fin_prdt_cd'])
         form = SavingProductsSerializer(data=item)
@@ -89,19 +110,85 @@ def save_saving_products(request):
                 print('이미있음')
                 continue
             form.save()
-    return JsonResponse({'response':response})
+
+    # option
+        for item in response['result']['optionList']:
+            # if item['intr_rate'] is None:
+            #     item['intr_rate'] = -1
+            form = SavingOptionsSerializer(data=item)
+            if form.is_valid(raise_exception=True):
+                print('저장')
+                x = SavingProducts.objects.filter(fin_prdt_cd=item['fin_prdt_cd']).first()
+                if SavingProducts.objects.filter(
+                        intr_rate = item['intr_rate'],
+                        intr_rate2 = item['intr_rate2'],
+                        intr_rate_type_nm = item['intr_rate_type_nm'],
+                        save_trm = item['save_trm'],
+                        rsrv_type_nm = item['rsrv_type_nm'],
+                        fin_prdt_cd_id = x.pk,
+                    ).exists():
+                    print('이미있음')
+                    continue
+                form.save(fin_prdt_cd=x)
+        
+        # product, option 묶어서 보내기
+        result_list = []
+        # product
+        baselist = response['result']['baseList']
+        # option
+        optionlist = response['result']['optionList']
+        for product in baselist:
+            test = {}
+            test2 = {}
+            for option in optionlist:
+                # product와 cd가 겹치는 option 뽑기
+                if product['fin_prdt_cd'] == option['fin_prdt_cd']:
+                    # 개월 당 최고 우대금리 dict로 묶어서 넣기
+                    test2[option['save_trm']+'개월'] =  option['intr_rate2']
+                    test2['type'] = option['rsrv_type_nm']
+                    # 이자 방식 첨부
+                    test2['intr_rate_type_nm'] = option['intr_rate_type_nm']
+                if option['rsrv_type_nm'] == '정액적립식':
+                    # 개월 당 최고 우대금리 dict로 묶어서 넣기
+                    test[option['save_trm']+'개월'] =  option['intr_rate2']
+                    test['type'] = option['rsrv_type_nm']
+                    # 이자 방식 첨부
+                    test['intr_rate_type_nm'] = option['intr_rate_type_nm']
+             # 특정 개월이 없는 상품은 0으로 채워주기
+            trm = ['6개월', '12개월', '24개월', '36개월']
+            if len(test2) != 0 :
+                for t in trm:
+                    if t not in test2.keys():
+                        test2[t] = 0
+                # 은행 이름 첨부
+                test2['bank'] = product['kor_co_nm']
+                # 상품 이름 첨부
+                test2['product'] = product['fin_prdt_nm']
+            if len(test) != 0:
+                for t in trm:
+                    if t not in test.keys():
+                        test[t] = 0
+                # 은행 이름 첨부
+                test['bank'] = product['kor_co_nm']
+                # 상품 이름 첨부
+                test['product'] = product['fin_prdt_nm']
+            if len(test) >= 8 :
+                test['id1'] = product['fin_prdt_cd']
+                result_list.append(test)
+            if len(test2) >= 8 :
+                test2['id1'] = product['fin_prdt_cd']
+                result_list.append(test2)
+                    
+        return JsonResponse({'response':result_list})
 
 
-def saving_products(request):
+def saving_detail(request, product_id):
     if request.method == 'GET':
-        products = SavingProducts.objects.all()
-        serializer = SavingProductsSerializer(products, many=True)
-        return JsonResponse({'response':serializer.data})
-    
-    elif request.method == 'POST':
-        serializer = SavingProductsSerializer(data=request.POST)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse({'response': serializer.data})
-        else:
-            return JsonResponse({ 'message': '이미 있는 데이터이거나, 데이터가 잘못 입력되었습니다.'})
+        try:
+            product = SavingProducts.objects.get(fin_prdt_cd=product_id)
+            serializer = SavingProductsSerializer(product)
+            return JsonResponse({'success': True, 'product': serializer.data})
+        # 일치하는 상품이 없을 경우 예외처리
+        except SavingProducts.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Product not found'})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})
