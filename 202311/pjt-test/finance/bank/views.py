@@ -7,14 +7,14 @@ from .serializer import *
 import requests
 
 BASE_URL = 'http://finlife.fss.or.kr/'
-API_KEY = settings.API_KEY
+API_KEY = settings.API_KEY_BANK
 API_URL = 'finlifeapi/depositProductsSearch.json'
 API_URL_SAVING = 'finlifeapi/savingProductsSearch.json'
 
 def api_test(request):
     URL = BASE_URL + API_URL
     params = {
-        'auth': settings.API_KEY,
+        'auth': API_KEY,
         'topFinGrpNo': '020000',
         'pageNo': 1
     }
@@ -62,7 +62,7 @@ def deposit_products(request):
 def api_test_saving(request):
     URL = BASE_URL + API_URL_SAVING
     params = {
-        'auth': settings.API_KEY,
+        'auth': API_KEY,
         'topFinGrpNo': '020000',
         'pageNo': 1
     }
