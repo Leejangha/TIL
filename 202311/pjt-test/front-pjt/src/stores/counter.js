@@ -10,10 +10,10 @@ export const useCounterStore = defineStore('counter', () => {
   const getDeposits = function () {
     axios({
       method: 'get',
-      url: `${API_URL}/bank/deposit/`, 
+      url: `${API_URL}/bank/deposit/`,
     })
       .then((res) => {
-        deposits.value = res.data.response
+        deposits.value = res.data
       })
       .catch((err) => {
         console.log(err)
@@ -25,7 +25,7 @@ export const useCounterStore = defineStore('counter', () => {
       url: `${API_URL}/bank/saving/`, 
     })
       .then((res) => {
-        savings.value = res.data.response
+        savings.value = res.data
       })
       .catch((err) => {
         console.log(err)

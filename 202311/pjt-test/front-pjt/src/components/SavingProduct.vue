@@ -1,11 +1,11 @@
 <template>
     <div>
-        <h5>{{ saving.id }}</h5>
+        <h5>{{ saving }}</h5>
         <p>{{ saving.fin_prdt_nm }}</p>
         <p>{{ saving.kor_co_nm }}</p>
-        <RouterLink :to="{ name: 'savingdetail', params: { id: saving.id }}" >
+        <!-- <RouterLink :to="{ name: 'savingdetail', params: { id: saving.id }}" >
             [Detail]
-        </RouterLink>
+        </RouterLink> -->
         <hr>
     </div>
 </template>

@@ -21,7 +21,7 @@
   onMounted(() => {
     axios({
       method: 'get',
-      url: `${store.API_URL}/bank/saving-products/${route.params.id}/`
+      url: `${store.API_URL}/bank/saving/${route.params.id}/`
     })
       .then((res) => {
         saving.value = res.data.response
