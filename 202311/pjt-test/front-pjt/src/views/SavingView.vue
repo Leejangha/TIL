@@ -2,7 +2,7 @@
     <div>
         <h1>Saving List</h1>
         <SavingProduct
-        v-for="saving in store.savings"
+            v-for="saving in store.savings"
             :key="saving.id"
             :saving="saving"
         />

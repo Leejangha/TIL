@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import DepositView from '@/views/DepositView.vue'
 import SavingView from '@/views/SavingView.vue'
-// import SavingDetail from '@/views/SavingDetail.vue'
 import ExchangeView from '@/views/ExchangeView.vue'
 
 const router = createRouter({
@@ -23,11 +22,6 @@ const router = createRouter({
       name: 'saving',
       component: SavingView
     },
-    // {
-    //   path: '/saving/:id',
-    //   name: 'savingdetail',
-    //   component: SavingDetail
-    // },
     {
       path: '/exchange',
       name: 'exchange',
