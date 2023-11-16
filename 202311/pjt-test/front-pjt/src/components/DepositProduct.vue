@@ -36,7 +36,11 @@ const realTimeValue = ref('')
 const customAmount = ref(10000000);
 
 const updateRealTimeValue = (deposit_option) => {
-    realTimeValue.value = Math.round(customAmount.value * deposit_option.intr_rate2 / 100 * deposit_option.save_trm / 12 * 0.846)
+    if (deposit_option.intr_rate_type_nm === "단리") {
+        realTimeValue.value = Math.round(customAmount.value * deposit_option.intr_rate2 / 100 * deposit_option.save_trm / 12 * 0.846)
+    } else {
+        realTimeValue.value = Math.round((customAmount.value * (1 + deposit_option.intr_rate2 / 100 / 12) ** deposit_option.save_trm - customAmount.value)  * 0.846)
+    }
 }
 
 const formatNumber = (number) => {

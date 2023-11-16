@@ -49,7 +49,6 @@ def save_deposit(request):
         intr_rate = option.get('intr_rate')
         intr_rate2 = option.get('intr_rate2')
         save_trm = option.get('save_trm')
-        intr_rate_type = option.get('intr_rate_type')
 
 
         # 어떤 상품의 옵션인지 검색
@@ -58,7 +57,6 @@ def save_deposit(request):
         if DepositOptions.objects.filter(product=deposit_product.id,
                                          intr_rate_type_nm=intr_rate_type_nm,
                                          save_trm=save_trm,
-                                         intr_rate_type=intr_rate_type,
                                          intr_rate=intr_rate,
                                          intr_rate2=intr_rate2).exists():
             continue
