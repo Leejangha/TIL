@@ -1,6 +1,7 @@
 <template>
   <header>
-    <div>
+    <!-- bootstrap3 -->
+    <!-- <div>
       <b-button>Button</b-button>
       <b-button variant="danger">Button</b-button>
       <b-button variant="success">Button</b-button>
@@ -12,8 +13,10 @@
         <b-col>2 of 3</b-col>
         <b-col>3 of 3</b-col>
       </b-row>
-    </b-container>
-    <v-card title="Card title" subtitle="Subtitle" text="...">
+    </b-container> -->
+
+    <!-- vuetify -->
+    <!-- <v-card title="Card title" subtitle="Subtitle" text="...">
       <v-card-actions>
         <v-btn>Click me</v-btn>
       </v-card-actions>
@@ -25,7 +28,7 @@
         :title="'Item ' + n"
         subtitle="Lorem ipsum dolor sit amet consectetur adipisicing elit"
       ></v-list-item>
-    </v-list>
+    </v-list> -->
 
     <nav>
       <RouterLink :to="{ name: 'home' }">
@@ -47,7 +50,6 @@
 
 <script setup>
 import { RouterView, RouterLink } from 'vue-router'
-
 </script>
 
 <style scoped>
