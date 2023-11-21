@@ -26,7 +26,10 @@
         <RouterLink v-else :to="{name: 'saving'}">관심 적금 목록을 추가해주세요</RouterLink>
       </div>
       <div class="recommended">
-        <p>추천 상품 : {{  recommended.recommend_list }}</p>
+        <p>추천 상품 : </p>
+        <ul v-for="recommended_product in recommended">
+          {{ recommended_product }}
+        </ul>
       </div>
       <hr>
       <!-- <p> {{ userdata }} </p> -->
@@ -70,6 +73,7 @@ onMounted(async () => {
   // await nextTick();
 
 });
+
 
 
 // console.log(userdata.value)

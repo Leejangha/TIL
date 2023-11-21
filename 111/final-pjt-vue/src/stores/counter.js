@@ -175,7 +175,7 @@ export const useCounterStore = defineStore('counter', () => {
       }
     })
       .then((res) => {
-        console.log(res)
+        // console.log(res.data)
         recommended.value = res.data
       })
       .catch((err) => {

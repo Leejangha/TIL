@@ -94,8 +94,8 @@ class SavingProductSerializer(serializers.ModelSerializer):
         model = SavingProducts
         fields = '__all__'
 
-class RecommendedSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        # fiels = ['username', 'age', 'money', 'salary', 'gender']
-        fields = '__all__'
+# class RecommendedSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         # fiels = ['username', 'age', 'money', 'salary', 'gender']
+#         fields = '__all__'
