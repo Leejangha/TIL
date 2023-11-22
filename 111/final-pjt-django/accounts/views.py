@@ -158,5 +158,7 @@ def k_means_clustering(request, username):
         for product, count in sorted_products[:6 ]:
             if product != '':
                 recommend_list.append(product)
+
+        # print(predictions)
         
         return Response(data=recommend_list, status=status.HTTP_200_OK)
