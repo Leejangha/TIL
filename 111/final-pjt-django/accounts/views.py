@@ -15,6 +15,8 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import MinMaxScaler
 from collections import Counter
 import joblib
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 @permission_classes([IsAuthenticated])
@@ -70,11 +72,11 @@ def k_means_clustering(request, username):
         # # 결측치 확인
         # print(df_user.isnull().sum())
 
-        # # features 선택
+        # features 선택
         # data = df_user[['age','gender', 'money', 'salary']]
 
 
-        # # 정규화 진행
+        # 정규화 진행
         # scaler = MinMaxScaler()
         # scaler.fit(data)
 
@@ -98,15 +100,15 @@ def k_means_clustering(request, username):
 
         # k = 4
 
-        # # 모델 생성
+        # # # 모델 생성
         # kmeans  = KMeans(n_clusters=k, init='k-means++', max_iter=300, random_state=0, n_init=10)
 
-        # # 모델 훈련
+        # # # 모델 훈련
         # kmeans.fit(data_scaled)
 
-        # joblib.dump(kmeans, current_directory+'/model/finance_model.pkl')
+        # # joblib.dump(kmeans, current_directory+'/model/finance_model.pkl')
 
-        # # 유저 군집 라벨 추가
+        # # # 유저 군집 라벨 추가
         # df_user['cluster'] = kmeans.labels_
 
         # 시각화
@@ -125,8 +127,8 @@ def k_means_clustering(request, username):
         # plt.scatter(centers_s[:,0], centers_s[:,2], c='black', alpha=0.8, s=150)
 
         # plt.subplot(133)
-        # sns.scatterplot(x=X.iloc[:,0], y=X.iloc[:,3], data=df_user, hue=kmeans.labels_, palette='coolwarm')
-        # plt.scatter(centers_s[:,0], centers_s[:,3], c='black', alpha=0.8, s=150)
+        # sns.scatterplot(x=X.iloc[:,0], y=X.iloc[:,4], data=df_user, hue=kmeans.labels_, palette='coolwarm')
+        # plt.scatter(centers_s[:,0], centers_s[:,4], c='black', alpha=0.8, s=150)
 
         # plt.show()
 
@@ -144,14 +146,17 @@ def k_means_clustering(request, username):
 
         df_user['cluster'] = loaded_kmeans.labels_
 
+
         # 동일한 클러스터에 있는 사용자의 금융 상품 추출
         financial_products = df_user.loc[df_user['cluster'] == predictions[0], 'product']
 
         # 상품별 개수 계산
-        product_count = dict(Counter(','.join(financial_products).split(';')))
+        product_count = dict(Counter(item for sublist in [s.split(';') for s in financial_products] for item in sublist))
 
         # 개수별로 제품 정렬
         sorted_products = sorted(product_count.items(), key=lambda x: x[1], reverse=True)
+        # print(sorted_products)
+        # print(financial_products)
 
         # 추천상품 표시
         recommend_list = []

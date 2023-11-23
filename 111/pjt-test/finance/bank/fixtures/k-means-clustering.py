@@ -25,10 +25,10 @@ product_list = json.load(product_json)
 # df_user = pd.read_csv(current_directory+'/data.csv')
 # df_user['gender'] = pd.to_numeric(df_user['gender'], errors='coerce')
 
-# json_file_path = os.path.join(current_directory, 'user_data.json')
-# with open(json_file_path, 'r', encoding='utf-8') as file:
-#     user_data = json.load(file)
-# df_user = pd.DataFrame(user_data)
+json_file_path = os.path.join(current_directory, 'user_data.json')
+with open(json_file_path, 'r', encoding='utf-8') as file:
+    user_data = json.load(file)
+df_user = pd.DataFrame(user_data)
 
 # 결측치 확인
 # print(df_user.isnull().sum())
@@ -72,12 +72,7 @@ df_user['cluster'] = kmeans.labels_
 
 user_cluster = df_user['cluster'].iloc[-1]
 
-
-comparison_df = df_user[['age', 'cluster']]
-
-accuracy = (comparison_df['age'] == comparison_df['cluster']).mean()
-print(f'Accuracy: {accuracy * 100:.2f}%')
-# 시각화
+# # 시각화
 # centers_s = kmeans.cluster_centers_
 
 # plt.figure(figsize=(20, 6))
@@ -89,21 +84,22 @@ print(f'Accuracy: {accuracy * 100:.2f}%')
 # plt.scatter(centers_s[:,0], centers_s[:,1], c='black', alpha=0.8, s=150)
 
 # plt.subplot(132)
-# sns.scatterplot(x=X.iloc[:,0], y=X.iloc[:,2], data=df_user, hue=kmeans.labels_, palette='coolwarm')
-# plt.scatter(centers_s[:,0], centers_s[:,2], c='black', alpha=0.8, s=150)
+# sns.scatterplot(x=X.iloc[:,1], y=X.iloc[:,2], data=df_user, hue=kmeans.labels_, palette='coolwarm')
+# plt.scatter(centers_s[:,1], centers_s[:,2], c='black', alpha=0.8, s=150)
 
 # plt.subplot(133)
-# sns.scatterplot(x=X.iloc[:,0], y=X.iloc[:,3], data=df_user, hue=kmeans.labels_, palette='coolwarm')
-# plt.scatter(centers_s[:,0], centers_s[:,3], c='black', alpha=0.8, s=150)
+# sns.scatterplot(x=X.iloc[:,2], y=X.iloc[:,3], data=df_user, hue=kmeans.labels_, palette='coolwarm')
+# plt.scatter(centers_s[:,2], centers_s[:,3], c='black', alpha=0.8, s=150)
 
 # plt.show()
 
 # 동일한 클러스터에 있는 사용자의 금융 상품 추출
-financial_products = df_user.loc[df_user['cluster'] == user_cluster, 'product']
+financial_products = df_user.loc[df_user['cluster'] == user_cluster, 'financial_products']
 
 
 # 상품별 개수 계산
-product_count = dict(Counter(','.join(financial_products).split(';')))
+product_count = dict(Counter(item for sublist in [s.split(',') for s in financial_products] for item in sublist))
+print(len(product_count.keys()))
 
 # 개수별로 제품 정렬
 sorted_products = sorted(product_count.items(), key=lambda x: x[1], reverse=True)
