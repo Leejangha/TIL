@@ -46,7 +46,7 @@ export default function AvailablePlaces({ onSelectPlace }) {
     <Places
       title="Available Places"
       places={availablePlaces}
-      isloading={isFetching}
+      isLoading={isFetching}
       loadingText="Fetching place data..."
       fallbackText="No places available."
       onSelectPlace={onSelectPlace}
