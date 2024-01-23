@@ -1,3 +1,2 @@
-const redux = require('redux');
+import { configureStore } from "@reduxjs/toolkit";
 
-const store = redux.createStore();
