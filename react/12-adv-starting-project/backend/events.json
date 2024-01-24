@@ -1,11 +1,1 @@
-{
-  "events": [
-    {
-      "id": "e1",
-      "title": "A dummy event",
-      "date": "2023-02-22",
-      "image": "https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg",
-      "description": "Join this amazing event and connect with fellow developers."
-    }
-  ]
-}
+{"events":[{"title":"Testing...!!!!!","image":"https://www.oyorooms.com/blog/wp-content/uploads/2018/02/event.jpg","date":"2024-01-04","description":"test","id":"6aa2d274-1a40-45ba-8615-8d909f5a0c0d"},{"title":"qwvav","image":"https://groupgordon.com/wp-content/uploads/2022/04/Messe_Luzern_Corporate_Event.jpg","date":"2024-01-12","description":"awfawfawf","id":"a7645096-2f8f-477c-94bc-1a49b4455178"},{"id":"e1","title":"A dummy event","date":"2023-02-22","image":"https://blog.hubspot.de/hubfs/Germany/Blog_images/Optimize_Marketing%20Events%20DACH%202021.jpg","description":"Join this amazing event and connect with fellow developers."}]}
