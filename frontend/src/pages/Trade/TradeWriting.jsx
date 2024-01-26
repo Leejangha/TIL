@@ -40,10 +40,10 @@ function TradeWriting() {
         </label>
         <Swiper
           modules={[Navigation, Pagination]}
-          spaceBetween={50}
+          spaceBetween={20}
           slidesPerView={1}
           navigation
-          pagination={{ clickable: true }}
+          pagination={{ clickable: false }}
         >
           {showImages.map((image, id) => (
             <SwiperSlide key={id}>
