@@ -7,6 +7,9 @@ import {
   redirect,
 } from 'react-router-dom';
 
+import { useState } from 'react';
+import PhotoView from '../Service/Delivery/PhotoView';
+
 import classes from './TradeForm.module.css';
 
 function TradeForm({ method, trade }) {
@@ -14,10 +17,12 @@ function TradeForm({ method, trade }) {
   const navigate = useNavigate();
   const navigation = useNavigation();
 
+  const [selectedFiles, setSelectedFiles] = useState([]);
+
   const isSubmitting = navigation.state === 'submitting';
 
   function cancelHandler() {
-    navigate('..');
+    navigate(-1);
   }
 
   return (
@@ -29,28 +34,116 @@ function TradeForm({ method, trade }) {
           ))}
         </ul>
       )}
-      <p>
-        <label htmlFor="image">사진</label>
-        <input id="image" type="file" name="image" required />
-      </p>
-      <p>
-        <label htmlFor="title">제목</label>
-        <input id="title" type="text" name="title" required />
-      </p>
-      <p>
-        <label htmlFor="cost">가격</label>
-        <input id="cost" type="int" name="cost" required />
-      </p>
-      <p>
-        <label htmlFor="description">Description</label>
-        <textarea id="description" name="description" rows="5" required />
+      <h2
+        style={{
+          marginTop: '4rem',
+          borderBottom: 'solid',
+          borderColor: '#B2B2B2',
+          borderWidth: '1px',
+        }}
+      >
+        글작성
+      </h2>
+      <article>
+        <p>
+          <input
+            id="title"
+            type="text"
+            name="title"
+            placeholder="제목을 작성해 주세요"
+            style={{
+              backgroundColor: '#F6F6F6',
+              border: 'none',
+              outline: 'none',
+              borderRadius: '4px',
+            }}
+            required
+          ></input>
+        </p>
+        <div style={{ fontWeight: 'bold' }}>상세 설정</div>
+        <input
+          id="cost"
+          type="int"
+          name="cost"
+          placeholder="판매 가격"
+          style={{
+            backgroundColor: '#F6F6F6',
+            border: 'none',
+            outline: 'none',
+            borderRadius: '4px',
+          }}
+          required
+        />
+        <div style={{ marginTop: '0.5rem', marginBottom: '1rem' }}>
+          <div style={{ fontWeight: 'bold' }}>거래 장소 지정</div>
+          <input
+            id="region"
+            type="text"
+            name="region"
+            placeholder="직거래 주소"
+            style={{
+              backgroundColor: '#F6F6F6',
+              border: 'none',
+              outline: 'none',
+              borderRadius: '4px',
+            }}
+            required
+          />
+        </div>
+      </article>
+      <div
+        style={{
+          border: 'solid',
+          borderWidth: '1px 0 1px 0',
+          borderColor: '#B2B2B2',
+          paddingTop: '0.5rem',
+          paddingBottom: '0.5rem',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          <div className="m-0 fw-bold">사진 추가</div>
+          <div
+            style={{
+              marginLeft: '0.5rem',
+              fontSize: 'small',
+              color: '#3FA3CF',
+            }}
+          >
+            특징이 잘 드러나도록 촬영해주세요.
+          </div>
+        </div>
+        <div className="d-flex gap-2  text-center">
+          <div className="col-9 d-flex">
+            <PhotoView
+              selectedFiles={selectedFiles}
+              setSelectedFiles={setSelectedFiles}
+            />
+          </div>
+        </div>
+      </div>
+      <p style={{ marginTop: '0.5rem' }}>
+        <label htmlFor="description" style={{ fontWeight: 'bold' }}>
+          상세 내용 작성
+        </label>
+        <textarea
+          id="description"
+          name="description"
+          rows="5"
+          required
+          style={{
+            borderColor: '#B2B2B2',
+            borderRadius: '4px',
+            resize: 'none',
+            outline: 'none',
+          }}
+        />
       </p>
       <div className={classes.actions}>
         <button type="button" onClick={cancelHandler} disabled={isSubmitting}>
-          Cancel
+          취소
         </button>
         <button disabled={isSubmitting}>
-          {isSubmitting ? 'Submitting...' : 'Save'}
+          {isSubmitting ? 'Submitting...' : '저장'}
         </button>
       </div>
     </Form>

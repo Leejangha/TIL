@@ -1,6 +1,8 @@
 .trades {
   margin: 2rem auto;
   width: 80%;
+  background-color: #F8F6F6;
+  border-radius: 4px;
 }
 
 .list {

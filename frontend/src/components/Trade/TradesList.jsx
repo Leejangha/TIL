@@ -8,7 +8,6 @@ function TradesList({ trades }) {
         {trades.map((trade) => (
           <li key={trade.id} className={classes.item}>
             <TradeItem trade={trade} />
-            <TradeItem trade={trade} />
           </li>
         ))}
       </ul>

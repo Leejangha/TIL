@@ -11,10 +11,16 @@
   border-radius: 4px;
 }
 
+.back {
+  margin: 1rem auto;
+  text-align: left;
+  margin-left: 10%;
+}
+
 .actions {
   display: flex;
   gap: 1rem;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
   padding: 0;
 }
@@ -28,7 +34,77 @@
 }
 
 .actions button {
-  background-color: transparent;
+  background-color: #FF1E1E;
   border: none;
   color: var(--color-primary-800);
+}
+
+.article {
+  margin: auto;
+  max-width: 80%;
+  text-align: left;
+}
+
+.title {
+  background-color: #ECF2FF;
+}
+
+.price {
+  display: flex;
+  font-weight: bold;
+}
+
+.date {
+  margin-left: auto;
+  font-weight: normal;
+}
+
+.content {
+  background-color: #ECF2FF;
+  min-height: 300px;
+}
+
+.chat {
+  display: flex;
+  justify-content: right;
+}
+
+.chat button {
+  border: none;
+  background-color: #84F1A3;
+}
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  text-align: center;
+  left: 0;
+  top: 4rem;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal content {
+  justify-content: center;
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
