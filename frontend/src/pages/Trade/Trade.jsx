@@ -4,8 +4,11 @@ import { useState } from 'react';
 import TradesList from '../../components/Trade/TradesList';
 import SearchBar from '../../components/Trade/SearchBar';
 import Header from '../../components/Header';
-import Chat from "../../components/Chat/Chat";
+import Chat from '../../components/Chat/Chat';
 import classes from './Trade.module.css';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 function Trade() {
   const trades = [
@@ -227,7 +230,7 @@ function Trade() {
     <>
       <Header />
       <Chat />
-      <article style={{marginTop:"4rem"}}>
+      <article style={{ marginTop: '4rem' }}>
         <h1>중고 거래</h1>
         <SearchBar onSearch={handleSearch} />
         {filteredTrades.length > 0 ? (
@@ -235,7 +238,10 @@ function Trade() {
             <TradesList trades={filteredTrades.slice(0, visibleCount)} />
             {showLoadMore && filteredTrades.length > visibleCount && (
               <div className={classes.more}>
-                <button onClick={handleLoadMore}>더보기</button>
+                <button onClick={handleLoadMore} className={classes.moreBtn}>
+                  <FontAwesomeIcon icon={faCirclePlus} style={{paddingRight: '10px'}}/>
+                  더보기
+                </button>
               </div>
             )}
           </>
@@ -244,7 +250,7 @@ function Trade() {
         )}
         <p>
           <button onClick={navigateHandler} className={classes.writing}>
-            글쓰기
+            글 쓰기
           </button>
         </p>
       </article>

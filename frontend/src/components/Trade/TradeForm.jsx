@@ -7,9 +7,8 @@ import {
   redirect,
 } from 'react-router-dom';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PhotoView from '../Service/Delivery/PhotoView';
-
 import classes from './TradeForm.module.css';
 
 function TradeForm({ method, trade }) {
@@ -20,6 +19,12 @@ function TradeForm({ method, trade }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
 
   const isSubmitting = navigation.state === 'submitting';
+
+  const [selectedOption, setSelectedOption] = useState('');
+
+  const handleRadioChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
 
   function cancelHandler() {
     navigate(-1);
@@ -61,19 +66,43 @@ function TradeForm({ method, trade }) {
           ></input>
         </p>
         <div style={{ fontWeight: 'bold' }}>상세 설정</div>
-        <input
-          id="cost"
-          type="int"
-          name="cost"
-          placeholder="판매 가격"
-          style={{
-            backgroundColor: '#F6F6F6',
-            border: 'none',
-            outline: 'none',
-            borderRadius: '4px',
-          }}
-          required
-        />
+        <div className={classes.option}>
+          <input
+            id="cost"
+            type="int"
+            name="cost"
+            placeholder="판매 가격"
+            style={{
+              backgroundColor: '#F6F6F6',
+              border: 'none',
+              outline: 'none',
+              borderRadius: '4px',
+            }}
+            required
+          />
+          <form>
+            <div className={classes.radioContainer}>
+              <label>
+                <input
+                  type="radio"
+                  value="option1"
+                  checked={selectedOption === 'option1'}
+                  onChange={handleRadioChange}
+                />
+                직거래
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="option2"
+                  checked={selectedOption === 'option2'}
+                  onChange={handleRadioChange}
+                />
+                택배
+              </label>
+            </div>
+          </form>
+        </div>
         <div style={{ marginTop: '0.5rem', marginBottom: '1rem' }}>
           <div style={{ fontWeight: 'bold' }}>거래 장소 지정</div>
           <input
