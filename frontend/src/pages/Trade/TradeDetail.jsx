@@ -229,9 +229,9 @@ function TradeDetail() {
       <Header />
       <Chat />
       {trade && <TradeItemDetail trade={trade} />}
-      <div>
+      {/* <div>
         <button onClick={sendRequest}>Send Request</button>
-      </div>
+      </div> */}
     </>
   );
 }

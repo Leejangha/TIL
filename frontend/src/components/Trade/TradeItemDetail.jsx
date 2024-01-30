@@ -103,20 +103,25 @@ function TradeItemDetail({ trade }) {
         </div>
       </div>
       <div className={classes.article}>
-        <h1 className={classes.title}>{trade.title}</h1>
+        <h2 className={classes.title}>{trade.title}</h2>
         <div className={classes.price}>
           <p>{trade.price}원</p>
           <p className={classes.date}>{trade.date}</p>
         </div>
         <p>{trade.isDirectTranscation ? '직거래' : '택배배송'}</p>
         <p className={classes.content}>{trade.content}</p>
-        <div>
+        <div className={classes.report}>
           <button onClick={showModal}>신고하기</button>
           {modalShow && <ReportModal onClose={hideModal} />}
         </div>
-        <menu className={classes.actions}>
-          <button onClick={startDeleteHandler}>삭제</button>
-        </menu>
+        <div className={classes.actions}>
+          <menu className={classes.edit}>
+            <button>수정</button>
+          </menu>
+          <menu className={classes.cancle}>
+            <button onClick={startDeleteHandler}>삭제</button>
+          </menu>
+        </div>
         <menu className={classes.chat}>
           <button onClick={toggleChat}>채팅</button>
           {isChatOpen && <Chat />}

@@ -22,53 +22,45 @@
   justify-content: flex-end;
 }
 
-.actions button {
-  font: inherit;
-  cursor: pointer;
-  padding: 0.5rem 1.5rem;
-  border-radius: 4px;
-  background-color: var(--color-gray-300);
-  color: var(--color-gray-800);
+.cancle {
+  background-color: red;
   border: none;
+  border-radius: 4px;
+  color: white;
 }
 
-.actions button[type='button'] {
-  background-color: transparent;
-  color: var(--color-gray-300);
+.save {
+  background-color: #608DFF;
+  border: none;
+  border-radius: 4px;
+  color: white;
 }
 
-.actions button:hover {
-  background-color: var(--color-primary-300);
-}
-
-.actions button[type='button']:hover {
-  background-color: var(--color-gray-800);
+.place {
+  display: flex;
+  gap: 2rem;
 }
 
 .option {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Adds space between the input field and radio buttons */
 }
 
 .option input[type="int"] { /* Targets only the int type input */
   width: 60%; /* Adjust as per your layout requirements */
-  margin-right: 10px; /* Optional, adds some space between the input and the radio buttons */
+  margin-right: 50px;
 }
 
 .radioContainer {
   display: flex;
-  align-items: center;
-  flex-grow: 1; /* Takes up the remaining space */
+  width: 300px;
+}
+
+.radioContainer input[type="radio"] {
+  width: 20%;
+  margin-right: 10px;
 }
 
 .radioContainer label {
-  display: flex;
-  align-items: center; /* Aligns items vertically in the center */
-  margin-right: 20px; /* Space between the radio button groups */
-  flex-direction: row; /* Ensures content within the label is in a row */
-}
-
-.radioContainer label input {
-  margin-right: 5px; /* Space between the radio button and its label text */
+  width: 20%;
 }
