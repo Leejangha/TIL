@@ -1,23 +1,41 @@
-import { create } from 'zustand'
-import axios from 'axios';
-const useAuthStore = create(set => ({
-  user: null,
-  token: null,
-  isLoading: false,
-  error: null,
+import { create } from 'zustand';
+import { api } from '../services/api';
 
-  login: async (email, pwd) => {
-    set({ isLoading: true, error: null });
-    try {
-      const response = await axios.post('http://192.168.30.145:8080/api/login', { email, pwd });
-      const { user, token } = response.data;
-      set({ user, token, isLoading: false });
-    } catch (error) {
-      set({ error: error.response?.data?.message || 'Login failed', isLoading: false });
-    }
-  },
+const useAuthStore = create((set) => {
+  const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+  const token = localStorage.getItem('token');
 
-  logout: () => set({ user: null, token: null })
-}));
+  return {
+    user: userInfo.email ? userInfo : null,
+    token: token,
+    isLoading: false,
+    error: null,
+    login: async (email, pwd, navigate) => {
+      set({ isLoading: true, error: null });
+      try {
+        const response = await api.post('/login', { email, pwd });
+        const { accessToken } = response.data.result;
+        localStorage.setItem('token', `Bearer ${accessToken}`);
+        localStorage.setItem('refreshToken', refreshToken);
+        localStorage.setItem('userInfo', JSON.stringify({ email }));
+        set({ user: { email }, token: accessToken, isLoading: false });
+
+        // 액세스 토큰 만료 시간을 고정값으로 설정 (예: 3600초)
+        const expiresIn = 3600 * 24 * 5; // 5일
+        setTimeout(async () => {
+          await refreshToken(); // 토큰 갱신 함수 호출
+        }, (expiresIn - 60) * 1000); // 만료 1분 전에 갱신
+        navigate('/dashboard');
+      } catch (error) {
+        set({
+          error: error.response?.data?.message || 'Login failed',
+          isLoading: false,
+        });
+      }
+    },
+
+    logout: () => set({ user: null, token: null }),
+  };
+});
 
 export default useAuthStore;
