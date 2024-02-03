@@ -3,8 +3,6 @@ import {
   useNavigate,
   useNavigation,
   useActionData,
-  json,
-  redirect,
 } from 'react-router-dom';
 
 import React, { useState } from 'react';
@@ -12,7 +10,6 @@ import { motion } from 'framer-motion';
 import PhotoView from '../Service/Delivery/PhotoView';
 import DaumPostcode from 'react-daum-postcode';
 import classes from './TradeForm.module.css';
-import useAuthStore from '../../store/store';
 import { api } from '../../services/api';
 
 function TradeForm({ method }) {
@@ -24,12 +21,12 @@ function TradeForm({ method }) {
 
   const isSubmitting = navigation.state === 'submitting';
 
-  const [selectedOption, setSelectedOption] = useState('직거래');
+  const [selectedOption, setSelectedOption] = useState('option1');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [address, setAddress] = useState('');
-  const [sigungu, setSigungu] = useState('');
+  const [sigungu, setSigungu] = useState(undefined);
   const [sigunguName, setSigunguName] = useState('');
 
   const handleRadioChange = (event) => {
@@ -43,7 +40,7 @@ function TradeForm({ method }) {
   function onCompletePost(data) {
     let fullAddress = data.address;
     setSigunguName(data.sigungu);
-    setSigungu(data.sigunguCode);
+    setSigungu(parseInt(data.sigunguCode, 10));
 
     setIsModalOpen(false);
     setAddress(fullAddress);
@@ -51,40 +48,38 @@ function TradeForm({ method }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    const formData = new FormData();
-
-    console.log(selectedFiles);
-    selectedFiles.forEach((file, index) => {
-      console.log(`File ${index}: `, file);
-      formData.append('imageFileList', file);
-    });
-
+  
     const boardTrade = {
       title: event.target.title.value,
       price: event.target.price.value,
-      isDirect: selectedOption === 'option1',
+      isDirect: selectedOption === 'option1' ? true : false,
       sigungu: sigungu,
       sigunguName: sigunguName,
-      place: address,
+      address: address,
       content: event.target.content.value,
     };
 
-    const blob = new Blob([JSON.stringify(boardTrade)], {
-      type: 'application/json',
+    const formData = new FormData();
+    formData.append(
+      "boardTrade",
+      new Blob([JSON.stringify(boardTrade)], { type: "application/json" })
+    );
+  
+    selectedFiles.forEach((fileObj) => {
+      // 파일 객체를 개별적으로 추가
+      formData.append('imageFileList', fileObj.file);
     });
-    formData.append('boardTrade', blob);
 
-    const config = {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    };
 
     try {
-      // Make the API call
-      const response = await api.post('/trade-items', formData);
-      console.log(response.data);
+      // 이미지 파일 전송
+      const response = await api.post('/trade-items', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log(response);
       navigate('/trade');
     } catch (error) {
       console.error('Error submitting form:', error);

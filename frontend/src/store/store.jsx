@@ -14,8 +14,8 @@ const useAuthStore = create((set) => {
       set({ isLoading: true, error: null });
       try {
         const response = await api.post('/login', { email, pwd });
-        const { accessToken } = response.data.result;
-        localStorage.setItem('token', `Bearer ${accessToken}`);
+        const { accessToken, refreshToken } = response.data.result;
+        localStorage.setItem('token', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
         localStorage.setItem('userInfo', JSON.stringify({ email }));
         set({ user: { email }, token: accessToken, isLoading: false });
@@ -27,6 +27,7 @@ const useAuthStore = create((set) => {
         }, (expiresIn - 60) * 1000); // 만료 1분 전에 갱신
         navigate('/dashboard');
       } catch (error) {
+        console.error('Login error:', error);
         set({
           error: error.response?.data?.message || 'Login failed',
           isLoading: false,

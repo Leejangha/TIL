@@ -25,6 +25,7 @@ import HelpWriting from './pages/Help/HelpWriting';
 import RequestCleaning from './pages/Service/Cleaning/RequestCleaning';
 import RequestCleaningForm from './pages/Service/Cleaning/RequestCleaningForm';
 import SubmitCleaningEstimate from './pages/Service/Cleaning/SubmitCleaningEstimate';
+import PoinHistory from './pages/MainPage/PointHistory';
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuthStore(); // Access the user state
@@ -45,6 +46,8 @@ const router = createBrowserRouter([
   { path: 'login', element: <Login /> },
   //프로필보기
   { path: 'myprofile', element: <MyProfile /> },
+  //포인트적립내역
+  { path: 'mypoint/:id', element: <PoinHistory /> },
   // 대시보드
   {
     path: 'dashboard',
@@ -84,7 +87,7 @@ const router = createBrowserRouter([
 
   //도움
   { path: 'help', element: <Help /> }, // 글목록
-  { path: 'helpdetail/:id', element: <HelpDetail /> }, //글상세보기
+  { path: 'helpdetail/:boardId', element: <HelpDetail /> }, //글상세보기
   { path: 'helpwriting', element: <HelpWriting /> }, //글쓰기
 ]);
 export const PRIMARY_COLOR = '#4A3AFF';
