@@ -10,14 +10,15 @@ const useAuthStore = create((set) => {
     token: token,
     isLoading: false,
     error: null,
-    login: async (email, pwd, navigate) => {
+    login: async (email, pwd, navigate, rememberMe) => {
       set({ isLoading: true, error: null });
       try {
         const response = await api.post('/login', { email, pwd });
         const { accessToken, refreshToken } = response.data.result;
-        localStorage.setItem('token', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
-        localStorage.setItem('userInfo', JSON.stringify({ email }));
+        const storage = rememberMe ? localStorage : sessionStorage;
+        storage.setItem('token', accessToken);
+        storage.setItem('refreshToken', refreshToken);
+        storage.setItem('userInfo', JSON.stringify({ email }));
         set({ user: { email }, token: accessToken, isLoading: false });
 
         // 액세스 토큰 만료 시간을 고정값으로 설정 (예: 3600초)
@@ -34,7 +35,6 @@ const useAuthStore = create((set) => {
         });
       }
     },
-
     logout: () => set({ user: null, token: null }),
   };
 });

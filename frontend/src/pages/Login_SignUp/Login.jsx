@@ -2,7 +2,7 @@ import React from "react";
 import "./Login.css";
 import LoginForm from "../../components/Login_SignUp/LoginForm";
 
-export default function Login() {
+export default function Login() {  
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div className="container">
